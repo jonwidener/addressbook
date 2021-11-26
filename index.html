@@ -1,0 +1,54 @@
+<html>
+  <head>
+    <title>Address Book</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>   
+    <link rel="stylesheet" href="app.css" type="text/css" /> 
+  </head>
+  <body>
+    <div id="app" style="font-family:'Courier New', Courier, monospace;">
+      <h1>Address Book</h1>
+      <div>
+        <span>Search: </span>
+        <input v-model="filter" v-on:keyup="updateFilter($event.target.value)" v-on:change="updateFilter($event.target.value)" 
+                v-on:mouseup="setTimeout(() => { updateFilter($event.target.value) })" />
+        <button v-on:click="onAddButton()">Add</button>        
+      </div>
+      <div v-for="(address, index) in displayAddresses" style="display: inline-block; border: 1px solid black; padding: 0.5em; margin: 0.5em;">
+        <div v-if="!address.edit_mode">
+          {{address.name}}<br/>
+          {{address.address_line_1}}<br/>
+          {{address.address_line_2}}<br/>
+          {{address.city}}, {{address.state}} {{address.zip_code}}
+          <div style="margin-top: 0.5em;">
+            <button v-on:click="onEditButton(index)">Edit</button>
+          </div>
+        </div>
+        <div v-if="address.edit_mode">
+          <div>
+            <span style="display: inline-block; width: 9em;">Name:</span>
+            <input v-model="address.name"/><br/>
+            <span style="display: inline-block; width: 9em;">Address Line 1:</span>
+            <input v-model="address.address_line_1"/><br/>
+            <span style="display: inline-block; width: 9em;">Address Line 2:</span>
+            <input v-model="address.address_line_2"/><br/>
+            <span style="display: inline-block; width: 9em;">City:</span>
+            <input v-model="address.city"><br/>
+            <span style="display: inline-block; width: 9em;">State:</span>
+            <select v-model="address.state">
+              <option v-for="state in theStates">{{state}}</option>
+            </select><br/>
+            <span style="display: inline-block; width: 9em;">Zip Code:</span>
+            <input v-model="address.zip_code"/>
+          </div>
+          <div style="margin-top: 0.5em;">
+            <button v-on:click="onSaveButton(index)">Save</button v-on:click="onEditButton(index)">
+            <span style="width: 1em;"></span>
+            <button v-on:click="onCancelButton(index)">Cancel</button v-on:click="onEditButton(index)">
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>
