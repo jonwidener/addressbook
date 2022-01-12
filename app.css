@@ -1,0 +1,14 @@
+button {
+  background-color: white;
+  border: 1px dashed black;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: lightgray;
+}
+
+button:active {
+  background-color: grey;
+  color: white;
+}
